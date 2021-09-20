@@ -4,7 +4,7 @@ from django.db.models import fields
 from django.forms.widgets import Widget
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Projects, Review, Profile
+from .models import Projects, Review, Profile, REVIEW_CHOICES
 
 
 class RegistrationForm(UserCreationForm):
@@ -34,7 +34,7 @@ class ProfileUpdateForm(forms.ModelForm):
             'profile_photo': forms.FileInput(attrs = {'class': 'form-control photo', 'type': 'file'})
         }
 
-class ProjectUpdateForm(forms.ModelForm):
+class ProjectForm(forms.ModelForm):
     class Meta:
         model = Projects
         fields = ('title', 'image', 'description', 'live_link')
@@ -45,14 +45,14 @@ class ProjectUpdateForm(forms.ModelForm):
             'description' : forms.Textarea(attrs={'class':"form-control project", 'label': 'Description', 'placeholder':"Description", 'aria-label':"Description"}),
             'live_link': forms.URLInput(attrs={'class':"form-control project", 'label': 'Live Link', 'placeholder':"Live Link", 'aria-label':"Live Link"}),
         }
-
+ 
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ('design', 'usability', 'content')
 
         widgets = {
-            'design': forms.TextInput(attrs={'class':"form-control review", 'label': 'Design', 'placeholder':"Design", 'aria-label':"Design"}),
-            'usability': forms.TextInput(attrs={'class':"form-control review", 'label': 'Usability', 'placeholder':"Usability", 'aria-label':"Usability"}),
-            'content': forms.TextInput(attrs={'class':"form-control review", 'label': 'Content', 'placeholder':"Content", 'aria-label':"Content"}),
+            'design': forms.Select(attrs={'class':"form-control review", 'label': 'Design', 'placeholder':"Design", 'aria-label':"Design"}),
+            'usability': forms.Select(attrs={'class':"form-control review", 'label': 'Usability', 'placeholder':"Usability", 'aria-label':"Usability"}),
+            'content': forms.Select(attrs={'class':"form-control review", 'label': 'Content', 'placeholder':"Content", 'aria-label':"Content"}),
         }
