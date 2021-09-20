@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reviews Login</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+</head>
+<style>
+    /* Text and Typography */
+.text--white {
+    color: #fff;
+}
+
+.text--primary {
+    color: #0096c7;
+}
+
+.text--center {
+    text-align: center;
+}
+
+.font-sm {
+    font-size: 12px;
+}
+
+.text--danger {
+    color: red;
+}
+
+/* height and width */
+.h-2 {
+    height: 3rem;
+}
+body, html{
+    height: 100%;
+    width: 100%;
+}
+/* unique classes */
+.header {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    margin: 2rem 0;
+}
+
+.hero-image {
+    width: 80%;
+    height: auto;
+}
+
+.sign-up-image {
+    width: 600px;
+    height: 300px;
+}
+
+.login-card {
+    width: 400px;
+    margin: 0 auto;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.ghost-button {
+    outline: none;
+    border: none;
+    margin: 1rem 0;
+    padding: .5rem 1rem;
+    width: 150px;
+    border-radius: 8px;
+    background-color: #0096c7;
+    color: #fff;
+    font-weight: 600;
+}
+
+.signup-ghost-button {
+    outline: none;
+    border: none;
+    margin: 1rem 0;
+    padding: .5rem 1rem;
+    width: 200px;
+    border-radius: 8px;
+    background-color: #0096c7;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* my schedule page */
+
+/* .my-schedule {
+    border: 1px solid #111;
+} */
+</style>
+<body>
+    <div class="container h-100">
+        <div class="header">
+            <div class="login-card px-4 py-2">
+                <h4 class="fw-light text--center mb-4">Re<span class="text--primary">views</span></h4>
+                <p class="fw-light">Fill in the fields to login</p>
+                <form class="d-flex flex-column justify-content-center align-items-center" action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-2">
+                        <div class="fw-bold text-capitalize mb-2">
+                            <label for="floatingInput">Username</label>
+                        </div>
+                        <div>
+                            <input type="text" name="username" class="form-control email" id="floatingInput" placeholder="Username">
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="fw-bold text-capitalize mb-2">
+                            <label for="floatingPassword">Password</label>
+                        </div> 
+                        <div>
+                            <input type="password" name="password" class="form-control email" id="floatingPassword" placeholder="Password">
+                        </div>
+                    </div>
+                    <div>
+                        <input class="ghost-button" type="submit" value="Login">
+                    </div>
+                </form>
+                <div class="signup">
+                    <p>
+                        New to Reviews? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
