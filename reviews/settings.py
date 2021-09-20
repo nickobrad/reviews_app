@@ -77,6 +77,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'review_app',
     'cloudinary',
+    'tinymce',
+    'bootstrap5',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -112,6 +116,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'reviews.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
