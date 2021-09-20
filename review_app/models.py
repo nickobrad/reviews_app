@@ -8,19 +8,23 @@ from django.db.models.fields.reverse_related import ManyToOneRel
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 # Create your models here.
 class Projects(models.Model):
     title = models.CharField(max_length=100)
     image = CloudinaryField('image', blank= True)
-    description = models.TextField(blank= True)
+    description = HTMLField(blank= True)
     live_link = models.URLField(max_length= 400, blank=True, null= True)
     posted_by = models.ForeignKey(User, related_name='myprojects', on_delete=models.CASCADE)
-    date_published = models.DateTimeField(auto_now_add=True)
+    date_published = models.DateTimeField(auto_now_add=True) 
 
+    def get_absolute_url(self):
+        return reverse('profile')
+ 
     def __str__(self) -> str:
-        return self.title
-
+        return self.title 
+ 
     def save_project(self):
         self.save()
 
@@ -45,7 +49,10 @@ class Profile(models.Model):
     gender = models.CharField(max_length=50, null = True)
     phone_number = models.CharField(max_length=100, null = True, blank=True)
     updated = models.DateTimeField(auto_now=True)
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True) 
+
+    def get_absolute_url(self):
+        return reverse('profile')
 
     def __str__(self) -> str:
         return self.user.username 
@@ -66,17 +73,25 @@ class Profile(models.Model):
         users = cls.objects.filter(user__username__icontains = search_term)
         return users
 
-    def get_absolute_url(self):
-        return reverse('myprofile', args=(str(self.pk)))
-
-
+REVIEW_CHOICES = [
+    (1, '1'),
+    (2, '2'),
+    (3, '3'),
+    (4, '4'),
+    (5, '5'),
+    (6, '6'),
+    (7, '7'),
+    (8, '8'),
+    (9, '9'),
+    (10, '10'),
+]
 
 class Review(models.Model):
     reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
     reviewed_project = models.ForeignKey(Projects, on_delete=models.CASCADE, related_name='reviews')
-    design = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
-    usability = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
-    content = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    design = models.PositiveSmallIntegerField(choices = REVIEW_CHOICES, blank = True, default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    usability = models.PositiveSmallIntegerField(choices = REVIEW_CHOICES, blank = True, default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    content = models.PositiveSmallIntegerField(choices = REVIEW_CHOICES, blank = True, default=1, validators=[MinValueValidator(1), MaxValueValidator(10)])
 
     def save_review(self):
         self.save()
