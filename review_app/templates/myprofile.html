@@ -199,33 +199,33 @@
         <hr class="featurette-divider">
   
         <div class="row featurette">
-          <div class="col-md-7 d-flex flex-column justify-content-center" style="">
+          <div class="col-md-7 d-flex flex-column justify-content-center">
             <h2 class="featurette-heading">
+            {% if profile.user.first_name %}
               {{  profile.user.first_name }} {{ profile.user.last_name }}
+            {% else %}
+              {{  profile.user.username }}
+            {% endif %}
             </h2>
             <p class="lead">
-              {% if profile.gender %}
+              {% if profile.phone_number %}
               <span class="text-muted">Phone Number</span>: {{ profile.phone_number }}
               {% else %}
-              
+              <span class="text-muted">Email Address</span>: {{ profile.user.email }}
             {% endif %}
             </p>
             <p class="lead">
             {% if profile.gender %}
               <span class="text-muted">Gender</span>: {{ profile.gender }}
               {% else %}
-              <p>
-                Genderless I guess.
-              </p>
+              <span class="text-muted">Gender</span>: Yet to be determined once profile is updated.
             {% endif %}
             </p>
             <p class="lead">
             {% if profile.bio %}
               <span class="text-muted">Bio</span>: {{ profile.bio }}
-              {% else %}
-              <p>
-                Hi, I am new here. 
-              </p>
+            {% else %}
+              <span class="text-muted">Bio</span>: Hi, I am new here. 
             {% endif %}
             </p>
             <a type="button" href = "{% url 'update_profile' profile.pk %}" class="btn btn-primary" style="width: fit-content;">
@@ -233,13 +233,15 @@
             </a>
           </div>
           <div class="col-md-5">
-            <img src="{{ profile.profile_photo.url }}" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3" width="500" height="500">  
+            {% if profile.profile_photo %}
+            <img src="{{ profile.profile_photo.url }}" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3" width="500" height="500"> 
+            {% else %}
+            <img src="/static/images/jeremy-perkins-UgNjyPkphtU-unsplash.jpg" alt="" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto p-3" width="500" height="500"> 
+            {% endif %} 
           </div>
         </div>
   
         <hr class="featurette-divider">
-
-
   
       </div><!-- /.container -->
   
