@@ -11,4 +11,4 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Projects
         fields = ('id', 'title', 'image', 'description', 'live_link', 'posted_by', 'date_published')
 
-#     design = Rating.objects.filter(project_id=id).values_list('design',flat=True)
+#     design = Rating.objects.filter(project_id=id).values_list('design',flat=True) 

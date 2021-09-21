@@ -19,6 +19,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import ProfileSerializer, ProjectSerializer
 from .permissions import IsAdminOrReadOnly
+import statistics
 
 # Create your views here.
 def register(request):
@@ -113,6 +114,19 @@ def project(request, pk):
     user2 = request.user
     rf = ReviewForm()
 
+    design = Review.objects.filter(reviewed_project = pk).values_list('design', flat=True)
+    usability = Review.objects.filter(reviewed_project = pk).values_list('usability', flat=True)
+    content = Review.objects.filter(reviewed_project = pk).values_list('content', flat=True)
+
+    if len(design) > 0 and len(usability) > 0 and len(content) > 0:
+        avg_design = round(statistics.mean(design), 1)
+        avg_usability = round(statistics.mean(usability), 1)
+        avg_content = round(statistics.mean(content), 1)
+    else:
+        avg_content = 0
+        avg_design = 0
+        avg_usability = 0
+
     if request.method == 'POST':
         rf = ReviewForm(request.POST)
         if rf.is_valid():
@@ -124,7 +138,7 @@ def project(request, pk):
         else:
             rf = ReviewForm
 
-    return render(request, 'project.html', {'project': project, 'profile': profile, 'rf': rf})
+    return render(request, 'project.html', {'project': project, 'profile': profile, 'rf': rf, 'design': avg_design, 'usability':avg_usability, 'content': avg_content})
 
 def rate(request, pk):
     project = Projects.objects.filter(pk = pk).first()
@@ -228,7 +242,7 @@ class OneProfile(APIView):
 
     def get(self, request, pk, format = None):
         profile = self.get_profile(pk)
-        serializers = ProjectSerializer(profile)
+        serializers = ProfileSerializer(profile)
         return Response(serializers.data)
 
     def put(self, request, pk, format=None):
@@ -251,7 +265,7 @@ class ProfileList(APIView):
 
     def get(self, request, format = None):
         all_profiles = Profile.objects.all()
-        serializers = ProjectSerializer(all_profiles, many = True)
+        serializers = ProfileSerializer(all_profiles, many = True)
         return Response(serializers.data)
 
     def get_profile(self, pk):
